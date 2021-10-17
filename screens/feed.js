@@ -9,7 +9,7 @@ import { auth, getEvents, followEvent } from '../config/firebase';
 import ReviewForm from '../components/eventForm'
 
 const Feed = () => {
-    
+
     const navigation = useNavigation();
     
     const [followedEvents, setFollowedEvents] = useState([{

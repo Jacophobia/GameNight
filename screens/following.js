@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import { ScreenStackHeaderRightView } from 'react-native-screens';
 import Header from '../components/threadHeader';
-import { auth, getEvent, getChat, getFollowedEvent } from '../config/firebase'
+import { auth, getEvent, getChat, getFollowedEvent, addMessage } from '../config/firebase'
 
 
 const Following = () => {
+
+    const [currentChat, setCurrentChat] = useState('');
 
     const navigation = useNavigation();
 
@@ -18,11 +20,19 @@ const Following = () => {
         navigation.replace("Feed")
     }
 
+    const sendChat = () => {
+        addMessage(currentChat, getFollowedEvent())
+        console.log("I pushed the button")
+    }
+
     let chat = getChat(getFollowedEvent())
                 
 
     return (
-        <KeyboardAvoidingView style={[styles.page, styles.lightBlueBackground]}>
+        <KeyboardAvoidingView 
+        style={[styles.page, styles.lightBlueBackground]}
+        behavior="padding"
+        >
 
             <Header toProfile={toFeed} toFollowing={toFeed} Title="Following"/>
 
@@ -32,22 +42,33 @@ const Following = () => {
                         if (event.Author == auth.currentUser?.email) {
                             return (
                                 <View key={index} style={styles.myMessage}>
-                                    <Text style={{color: '#ffffff'}}>{event.Author} : {event.Content}</Text>
+                                    <Text style={{color: '#ffffff'}}>{event.Author} : {event.Content}{event.text}</Text>
                                 </View>
                             )
                         }
                         return (
                             <View key={index} style={styles.message}>
-                                <Text>{event.Author} : {event.Content}</Text>
+                                <Text>{event.Author} : {event.Content}{event.text}</Text>
                             </View>
                         );
                     })
                 }
             </ScrollView>
-            <View style={{backgroundColor: 'white', padding: 10, marginBottom: 265, marginTop: 15, borderRadius: 10, width: '90%'}}>
-            <TextInput placeholder="Type your message here..." style={{}}>
-                
-            </TextInput>
+            <View style={[{backgroundColor: '#889FC0', width: '100%'}, styles.centerContent]}>
+                <View style={{backgroundColor: 'white', padding: 10, marginTop: 15, borderRadius: 10, width: '90%'}}>
+                <TextInput placeholder="Type your message here..." style={{}}
+                value={currentChat} 
+                onChangeText={text => setCurrentChat(text)}
+                style={styles.input}>
+                    
+                </TextInput>
+                </View>
+                <TouchableOpacity
+                    onPress = {sendChat}
+                    style={[styles.button, styles.centerContent]}
+                >
+                    <Text>Send</Text>
+                </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     )
@@ -123,5 +144,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#8C2B3D',
         padding: 15,
         borderRadius: 10,
-    }
+    },
+    button: {
+        backgroundColor: '#F272B8',
+        width: '20%',
+        padding: 15,
+        borderRadius: 10,
+        marginTop: 18,
+        marginBottom: 22
+    },
 })

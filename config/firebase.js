@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import * as firebase from "firebase";
+import { getDatabase, ref, onValue} from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -61,7 +62,7 @@ const getEvent = title => {
   });
   if (contents === null || contents === undefined) {
     console.error("Unable to find item: " + title);
-    return{}
+    return {}
   }
   return contents[`${title.toLowerCase()}`]
 }
@@ -104,15 +105,15 @@ const getChat = (chat) => {
     contents = value.val();
     console.log('contents: ', contents);
   });
-  if (contents === null || contents === undefined) {
-    return [{
-      Author: 'The Game Knights Development Team', 
-      Content: "It looks like you aren't following any events right now! Try Following one in your feed!"
-    }]
-  }
+  // if (contents === null || contents === undefined) {
+  //   return [{
+  //     Author: 'The Game Knights Development Team', 
+  //     Content: "It looks like you aren't following any events right now! Try Following one in your feed!"
+  //   }]
+  // }
   let messages = []
-  // console.log("jeremy")
-  let counter = 0;
+
+
   for (const key in contents) {
     messages.push(contents[key])
   }
