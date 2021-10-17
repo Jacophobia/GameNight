@@ -4,9 +4,8 @@ I really wanted to get some experience working in the front-end, so I decided th
 
 Our app, Game Night, is an app designed to help users find fun local events where they can do what they want with like-minded people. It has built in chat functions, authentication, and a live even feed.
 
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the app running and a walkthrough of the code.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/Rh-nIb0vYxg)
+[Code Walk Through](https://youtu.be/mZvEerJSBjw)
 
 # Development Environment
 
